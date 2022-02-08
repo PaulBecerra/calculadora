@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/btnSubtraction"
+    android:id="@+id/layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2A2A2A"
@@ -47,6 +47,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#FF9800"
+        android:onClick="setOperationListener"
         android:text="÷"
         android:textSize="24sp"
         app:cornerRadius="75dp"
@@ -59,6 +60,7 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:backgroundTint="#FF9800"
+        android:onClick="setOperationListener"
         android:text="*"
         android:textSize="24sp"
         app:cornerRadius="75dp"
@@ -113,11 +115,12 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button37"
+        android:id="@+id/btnSub"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:backgroundTint="#FF9800"
+        android:onClick="setOperationListener"
         android:text="-"
         android:textSize="24sp"
         app:cornerRadius="75dp"
@@ -136,8 +139,8 @@
         android:text="6"
         android:textSize="24sp"
         app:cornerRadius="75dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/button37"
-        app:layout_constraintEnd_toStartOf="@+id/button37"
+        app:layout_constraintBaseline_toBaselineOf="@+id/btnSub"
+        app:layout_constraintEnd_toStartOf="@+id/btnSub"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn5" />
 
@@ -177,13 +180,14 @@
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:backgroundTint="#FF9800"
+        android:onClick="setOperationListener"
         android:text="+"
         android:textSize="24sp"
         app:cornerRadius="75dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn3"
-        app:layout_constraintTop_toBottomOf="@+id/button37" />
+        app:layout_constraintTop_toBottomOf="@+id/btnSub" />
 
     <Button
         android:id="@+id/btn3"

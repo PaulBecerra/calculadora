@@ -3,17 +3,55 @@ package becerra.paul.calculadora
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.TextView
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
+    // enum class for operations
+    enum class Operation {
+        ADDITION, SUBTRACTION,MULTIPLICATION,DIVISION, NOTHING
+    }
+
+    var op: Operation = Operation.NOTHING
+    var number1: Double = 0.0
+    lateinit var textViewInput: TextView
+    lateinit var textViewOutput: TextView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        textViewInput = findViewById(R.id.textViewInput)
+        textViewOutput = findViewById(R.id.textViewOutput)
+        val btnClear: Button = findViewById(R.id.btnClear)
+        val btnEquals: Button = findViewById(R.id.btnResult)
+
+        btnEquals.setOnClickListener {
+            var number2: Double = textViewInput.text.toString().toDouble()
+
+            var response: Double = when (op) {
+                Operation.ADDITION -> number1 + number2
+                Operation.SUBTRACTION -> number1 - number2
+                Operation.MULTIPLICATION -> number1 * number2
+                Operation.DIVISION -> number1 / number2
+                Operation.NOTHING -> 0.0
+            }
+
+            textViewInput.setText(response.toString())
+            textViewOutput.setText("")
+        }
+
+        btnClear.setOnClickListener{
+            textViewOutput.setText("")
+            textViewInput.setText("")
+            number1 = 0.0
+            op = Operation.NOTHING
+        }
     }
 
 
     fun addNumberInputListener(view: View){
-        val textViewInput: TextView = findViewById(R.id.textViewInput)
         var numberInput: String = textViewInput.text.toString()
 
         when(view.id){
@@ -32,7 +70,30 @@ class MainActivity : AppCompatActivity() {
                 if ("." in numberInput) return
                 textViewInput.setText(numberInput + ".")
             }
+        }
+    }
 
+    fun setOperationListener(view: View){
+        var inputNumber = textViewInput.text.toString()
+        number1 = inputNumber.toDouble()
+        textViewInput.setText("")
+        when(view.id){
+            R.id.btnAdd -> {
+                textViewOutput.setText(inputNumber + " +")
+                op = Operation.ADDITION
+            }
+            R.id.btnSub -> {
+                textViewOutput.setText(inputNumber + " -")
+                op = Operation.SUBTRACTION
+            }
+            R.id.btnMulti -> {
+                textViewOutput.setText(inputNumber + " *")
+                op = Operation.MULTIPLICATION
+            }
+            R.id.btnDivision -> {
+                textViewOutput.setText(inputNumber + " ÷")
+                op = Operation.DIVISION
+            }
         }
     }
 }
