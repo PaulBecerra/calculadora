@@ -10,7 +10,7 @@ import org.w3c.dom.Text
 class MainActivity : AppCompatActivity() {
     // enum class for operations
     enum class Operation {
-        ADDITION, SUBTRACTION,MULTIPLICATION,DIVISION, NOTHING
+        ADDITION, SUBTRACTION,MULTIPLICATION,DIVISION, NOTHING,EQUALS
     }
 
     var op: Operation = Operation.NOTHING
@@ -28,18 +28,25 @@ class MainActivity : AppCompatActivity() {
         val btnEquals: Button = findViewById(R.id.btnResult)
 
         btnEquals.setOnClickListener {
-            var number2: Double = textViewInput.text.toString().toDouble()
+            // validate operation
+            if (op == Operation.NOTHING || op == Operation.EQUALS) return@setOnClickListener
+
+            val input = textViewInput.text.toString()
+            var number2: Double = if (input == "") 0.0 else input.toDouble()
 
             var response: Double = when (op) {
                 Operation.ADDITION -> number1 + number2
                 Operation.SUBTRACTION -> number1 - number2
                 Operation.MULTIPLICATION -> number1 * number2
-                Operation.DIVISION -> number1 / number2
-                Operation.NOTHING -> 0.0
+                Operation.DIVISION -> if (number2 == 0.0) 0.0 else number1 / number2
+                else -> 0.0
             }
-
-            textViewInput.setText(response.toString())
+            val responseText = if (response == 0.0 && op == Operation.DIVISION)
+                                    "can't divide by zero"
+                                    else response.toString()
+            textViewInput.setText(responseText)
             textViewOutput.setText("")
+            op = Operation.EQUALS
         }
 
         btnClear.setOnClickListener{
@@ -52,6 +59,12 @@ class MainActivity : AppCompatActivity() {
 
 
     fun addNumberInputListener(view: View){
+        // validate input after execute operation
+        if (op == Operation.EQUALS) {
+            textViewInput.setText("")
+            op = Operation.NOTHING
+        }
+
         var numberInput: String = textViewInput.text.toString()
 
         when(view.id){
