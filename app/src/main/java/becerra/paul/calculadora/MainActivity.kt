@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setOperationListener(view: View){
-        if (op != Operation.NOTHING) return
         var inputNumber = textViewInput.text.toString()
+        if (inputNumber.isNullOrEmpty()) return
         number1 = inputNumber.toDouble()
         textViewInput.setText("")
         when(view.id){
